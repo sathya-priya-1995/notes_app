@@ -28,15 +28,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 - (IBAction)saveUserDetail:(id)sender {
     NSString *userName=self.name.text;
     NSString *userEmail=self.email.text;
@@ -45,11 +36,17 @@
     BOOL isValid=[self validate:userName email:userEmail pass:userPassword];
     if (isValid)
     {
+        //save user datail.
         NSManagedObjectContext *context = [self managedObjectContext];
         NSManagedObject *newUser = [NSEntityDescription insertNewObjectForEntityForName:@"UserDetail" inManagedObjectContext:context];
         [newUser setValue:userName forKey:@"name"];
         [newUser setValue:userEmail forKey:@"email"];
         [newUser setValue:userPassword forKey:@"password"];
+        
+        //empty fields
+        self.name.text=@"";
+        self.email.text=@"";
+        self.password.text=@"";
         
         NSError *error = nil;
         // Save the object to persistent store
@@ -57,19 +54,16 @@
             NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
         }
         else{
-            self.name.text=@"";
-            self.email.text=@"";
-            self.password.text=@"";
-            
             UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Message" message:@"Registered Successfully"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
             [alertMessage show];
         }
-        
     }
-    
 }
+
+//validate username and password
 -(BOOL)validate:(NSString*)userName email:(NSString*)userEmail pass:(NSString*)password
 {
+    //empty check
     if(![userName isEqual:@""]&& ![userEmail isEqual:@""]&&![password isEqual:@""])
     {
         BOOL validEmail=[self validateEmail:userEmail];
@@ -96,6 +90,7 @@
     
     return false;
 }
+//validate email
 -(BOOL) validateEmail:(NSString*)email
 {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
@@ -106,7 +101,7 @@
     }
     return false;
 }
-
+//validate password
 -(BOOL) validatePassword:(NSString*)password
 {
     NSString *passwordRegex=@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{6,}";

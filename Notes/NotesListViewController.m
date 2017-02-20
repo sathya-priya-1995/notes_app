@@ -4,8 +4,9 @@
 
 @interface NotesListViewController ()
 {
-    NSArray *notesArray;
+    NSMutableArray *notesArray;
     NSString *loginUserEmail;
+    //it holds Search result objects
      NSMutableArray *searchResultArray;
 }
 
@@ -14,6 +15,7 @@
 
 @implementation NotesListViewController
 
+//create managed object context
 - (NSManagedObjectContext *)managedObjectContext {
     NSManagedObjectContext *context = nil;
     id delegate = [[UIApplication sharedApplication] delegate];
@@ -26,27 +28,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //load notes from table based on logged user email
     loginUserEmail = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginUserEmail"];
-    
-    
-    
-    // Do any additional setup after loading the view.
-    
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Notes"];
     NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"(email == %@) ",loginUserEmail];
     [fetchRequest setPredicate:predicateID];
     notesArray =[[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
-    //NSManagedObject *device = [notesArray objectAtIndex:0];
-    //NSString *str=[device valueForKey:@"note"];
-   // NSLog(@"%@",str);
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    // Fetch the devices from persistent data store
+    // Fetch the Notes from persistent data store
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Notes"];
     NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"(email == %@) ",loginUserEmail];
@@ -58,38 +53,29 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)indexPath {
     
+    //pass selected note from Notes list view to Edit view
     if ([[segue identifier] isEqualToString:@"pushDetailView"]) {
         NoteEditViewController *controller = segue.destinationViewController;
-        // NSManagedObject *selectedNote = [notesArray objectAtIndex:indexPath.row];
-        
         @try {
             if ([indexPath valueForKey:@"note"]!=nil ) {
                 controller.selectedNote=indexPath;
             }
         }
         @catch (NSException *exception) {
-            NSLog(@"");
+            NSLog(@"Exception while push");
         }
-        
-        
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    
+     }
 }
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
@@ -106,6 +92,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //return row for table view controller
     static NSString *simpleTableIdentifier = @"notesViewCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
@@ -113,8 +100,6 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
-    // Configure the cell...
-
     if (tableView == self.searchDisplayController.searchResultsTableView) {
        NSManagedObject *note = [searchResultArray objectAtIndex:indexPath.row];
         [cell.textLabel setAttributedText:[note valueForKey:@"note"]];
@@ -140,6 +125,8 @@
 }
 - (IBAction)doLogOut:(id)sender
 {
+    //while logout we will clear all details from userdefaults
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUsermName"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUserEmail"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"login"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -150,8 +137,6 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     [self updateSearchArray:searchText];
-    //NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"note contains[c] %@", searchText];
-    //searchResultArray = [notesArray filteredArrayUsingPredicate:resultPredicate];
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
@@ -163,15 +148,15 @@
     
     return YES;
 }
+//it will return search result
 -(void)updateSearchArray:(NSString *)searchText
 {
      NSMutableArray *stringArray=[[NSMutableArray alloc]init];
-    NSString *text;
-    NSMutableAttributedString *cString;
+    NSMutableAttributedString *attrVal;
     for(NSManagedObject *note in notesArray)
     {
-        cString=[note valueForKey:@"note"];
-        [stringArray addObject:cString.string];
+        attrVal=[note valueForKey:@"note"];
+        [stringArray addObject:attrVal.string];
     }
     int i=0;
   
@@ -186,6 +171,21 @@
             i++;
           }
     [self.tableview reloadData];
+}
+
+//delete selected note
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+      NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    [managedObjectContext deleteObject:[notesArray objectAtIndex:indexPath.row]];
+    NSError *error = nil;
+    if (![managedObjectContext save:&error]) {
+        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
+        return;
+    }
+     [notesArray removeObjectAtIndex:indexPath.row];
+    
+     [self.tableview reloadData];
 }
 
 @end

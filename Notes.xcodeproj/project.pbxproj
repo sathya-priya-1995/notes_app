@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B811B6161E5B65F4006DB7D1 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B811B6151E5B65F4006DB7D1 /* ProfileViewController.m */; };
 		B8CCBB7C1E59DE9B00A4B602 /* bold@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB7B1E59DE9B00A4B602 /* bold@2x.png */; };
 		B8CCBB7E1E59E0AA00A4B602 /* italic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB7D1E59E0AA00A4B602 /* italic@2x.png */; };
 		B8CCBB801E59E12200A4B602 /* underline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB7F1E59E12200A4B602 /* underline@2x.png */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B811B6141E5B65F4006DB7D1 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		B811B6151E5B65F4006DB7D1 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		B8CCBB7B1E59DE9B00A4B602 /* bold@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bold@2x.png"; sourceTree = "<group>"; };
 		B8CCBB7D1E59E0AA00A4B602 /* italic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "italic@2x.png"; sourceTree = "<group>"; };
 		B8CCBB7F1E59E12200A4B602 /* underline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "underline@2x.png"; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 				B8F2EE831E59550E008A3B8A /* NotesListViewController.m */,
 				B8F2EE851E595AED008A3B8A /* NoteEditViewController.h */,
 				B8F2EE861E595AED008A3B8A /* NoteEditViewController.m */,
+				B811B6141E5B65F4006DB7D1 /* ProfileViewController.h */,
+				B811B6151E5B65F4006DB7D1 /* ProfileViewController.m */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -267,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8F2EE811E5954F0008A3B8A /* SignupViewController.m in Sources */,
+				B811B6161E5B65F4006DB7D1 /* ProfileViewController.m in Sources */,
 				B8F2EE591E595237008A3B8A /* AppDelegate.m in Sources */,
 				B8F2EE5C1E595237008A3B8A /* Notes.xcdatamodeld in Sources */,
 				B8F2EE5F1E595237008A3B8A /* ViewController.m in Sources */,
