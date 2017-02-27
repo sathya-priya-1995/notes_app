@@ -102,7 +102,7 @@
     }
     if (tableView == self.searchDisplayController.searchResultsTableView) {
        NSManagedObject *note = [searchResultArray objectAtIndex:indexPath.row];
-        [cell.textLabel setAttributedText:[note valueForKey:@"note"]];
+        [cell.textLabel setAttributedText:[note valueForKey:@"title"]];
     }else
     {
          NSManagedObject *note = [notesArray objectAtIndex:indexPath.row];
@@ -169,11 +169,20 @@
 -(void)updateSearchArray:(NSString *)searchText
 {
      NSMutableArray *stringArray=[[NSMutableArray alloc]init];
+     NSMutableArray *titleArray=[[NSMutableArray alloc]init];
     NSMutableAttributedString *attrVal;
+     NSMutableAttributedString *arrtitle;
     for(NSManagedObject *note in notesArray)
     {
-        attrVal=[note valueForKey:@"note"];
-        [stringArray addObject:attrVal.string];
+        @try {
+            attrVal=[note valueForKey:@"note"];
+            [stringArray addObject:attrVal.string];
+            arrtitle=[note valueForKey:@"title"];
+            [titleArray addObject:arrtitle.string];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"");
+        }
     }
     int i=0;
   
@@ -181,7 +190,9 @@
         for(NSString *string in stringArray){
             
             NSRange stringRange=[string rangeOfString:searchText options:NSCaseInsensitiveSearch];
-            if(stringRange.location !=NSNotFound){
+            NSRange titleRange=[[titleArray objectAtIndex:i] rangeOfString:searchText options:NSCaseInsensitiveSearch];
+
+            if(stringRange.location !=NSNotFound || titleRange.location !=NSNotFound ){
                 
                 [searchResultArray addObject:[notesArray objectAtIndex:i]];
             }
