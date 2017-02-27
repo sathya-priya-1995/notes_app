@@ -175,24 +175,40 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5Gd-12-fdi" kind="custom" identifier="pushDetailView" id="4mS-Xo-FgY"/>
+                                    <segue destination="5Gd-12-fdi" kind="modal" identifier="pushDetailView" id="Szg-Eh-1t9"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BxX-ED-9zn">
-                                <rect key="frame" x="0.0" y="122" width="358" height="478"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Slr-KO-jYf" id="XRX-oZ-MHn"/>
                                     <outlet property="delegate" destination="Slr-KO-jYf" id="2l0-cc-vbZ"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHX-Oa-n2a">
+                                <rect key="frame" x="185" y="28" width="98" height="30"/>
+                                <state key="normal" title="Dropbox sync">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="syncWithDropbox:" destination="Slr-KO-jYf" eventType="touchUpInside" id="hkK-9U-AZi"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="050-tI-K0N">
+                                <rect key="frame" x="0.0" y="122" width="358" height="356"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Slr-KO-jYf" id="tA6-CV-rrt"/>
+                                    <outlet property="delegate" destination="Slr-KO-jYf" id="h4H-1I-e0T"/>
+                                </connections>
+                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bB-69-GMY">
-                                <rect key="frame" x="163" y="28" width="46" height="30"/>
+                                <rect key="frame" x="99" y="28" width="46" height="30"/>
                                 <state key="normal" title="Profile">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="gg7-QS-nww" kind="modal" id="Oq3-BP-3aY"/>
+                                    <segue destination="gg7-QS-nww" kind="modal" id="g85-kt-6e8"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -203,7 +219,7 @@
                     <size key="freeformSize" width="450" height="600"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="CLp-ha-lnW" id="926-ts-A0s"/>
-                        <outlet property="tableview" destination="BxX-ED-9zn" id="Uyu-5y-D59"/>
+                        <outlet property="tableview" destination="050-tI-K0N" id="w6Y-Zp-tOH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZcC-j8-cah" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -217,7 +233,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="3571" y="316"/>
+            <point key="canvasLocation" x="5167" y="316"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="09N-he-esx">
@@ -284,13 +300,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twc-8J-iaf">
-                                <rect key="frame" x="0.0" y="52" width="320" height="295"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lnT-cw-2eu">
-                                        <rect key="frame" x="8" y="11" width="304" height="273"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
@@ -304,17 +319,32 @@
                                     <action selector="saveNote:" destination="5Gd-12-fdi" eventType="touchUpInside" id="TZx-Nc-x8I"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o37-cc-rUE">
+                                <rect key="frame" x="5" y="52" width="310" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="az4-J9-d3C">
+                                <rect key="frame" x="5" y="83" width="310" height="380"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="aVW-7Q-SMn"/>
                     <connections>
-                        <outlet property="textView" destination="lnT-cw-2eu" id="WgR-qC-eXu"/>
+                        <outlet property="textView" destination="az4-J9-d3C" id="xSz-gk-ePj"/>
+                        <outlet property="titleView" destination="o37-cc-rUE" id="Tzx-eL-HTB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9a-mQ-Wbs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4307" y="308"/>
+            <point key="canvasLocation" x="5730" y="332"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FgR-LT-jDa">

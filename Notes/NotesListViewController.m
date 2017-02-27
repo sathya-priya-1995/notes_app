@@ -68,7 +68,7 @@
             }
         }
         @catch (NSException *exception) {
-            NSLog(@"Exception while push");
+            NSLog(@"");
         }
      }
 }
@@ -106,7 +106,7 @@
     }else
     {
          NSManagedObject *note = [notesArray objectAtIndex:indexPath.row];
-        [cell.textLabel setAttributedText:[note valueForKey:@"note"]];
+        [cell.textLabel setAttributedText:[note valueForKey:@"title"]];
     }
     return cell;
 }
@@ -126,6 +126,8 @@
 - (IBAction)doLogOut:(id)sender
 {
     //while logout we will clear all details from userdefaults
+    //remove dropbox session while logout 
+    [[DBSession sharedSession] unlinkAll];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUsermName"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUserEmail"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"login"];
@@ -134,6 +136,21 @@
 
 }
 
+//sync with drobox
+- (IBAction)syncWithDropbox:(id)sender {
+    [self didPressLink];
+}
+//if dropbox connection is not available then make connection else show alert to user.
+- (void)didPressLink {
+    if (![[DBSession sharedSession] isLinked]) {
+        [[DBSession sharedSession] linkFromController:self];
+    }else
+    {
+        UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"DropBox sync enabled Already"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+        [alertMessage show];
+        NSLog(@"linked");
+    }
+}
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     [self updateSearchArray:searchText];
@@ -176,16 +193,38 @@
 //delete selected note
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-      NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    //delete file from Dropbox if session is available
+    if([[DBSession sharedSession] isLinked])
+    {
+        NSManagedObject *deletedObj=[notesArray objectAtIndex:indexPath.row];
+        NSAttributedString *str=[deletedObj valueForKey:@"title"];
+        NSString *val=[str string];
+        NSString *fname = [ val stringByAppendingString:@".txt"];
+        NSString *dir=@"/";
+        NSString *path = [NSString stringWithFormat: @"%@%@", dir,fname];
+        [self.restClient deletePath:path];
+    }
+    //delete data from table
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     [managedObjectContext deleteObject:[notesArray objectAtIndex:indexPath.row]];
     NSError *error = nil;
     if (![managedObjectContext save:&error]) {
         NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
         return;
     }
-     [notesArray removeObjectAtIndex:indexPath.row];
-    
-     [self.tableview reloadData];
+    [notesArray removeObjectAtIndex:indexPath.row];
+    [self.tableview reloadData];
 }
+
+//method for get client to communicate with dropbox
+- (DBRestClient *)restClient
+{
+    if (restClient == nil) {
+        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient.delegate = self;
+    }
+    return restClient;
+}
+
 
 @end

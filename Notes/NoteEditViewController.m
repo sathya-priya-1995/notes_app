@@ -1,12 +1,17 @@
 
 
 #import "NoteEditViewController.h"
+//#import "MBProgressHUD.h"
 
 @interface NoteEditViewController ()
 {
     NSString *loginUserEmail;
     UIToolbar *toolBar;
     UIView *inputView;
+    NSMutableDictionary *revPath;
+    NSString *seletedNoteTitle;
+    NSString *seletedNoteRevision;
+   
 }
 @end
 
@@ -24,12 +29,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-     loginUserEmail = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginUserEmail"];
+    if (!_loadData) {
+        _loadData = @"/";
+    }
+    
+    revPath=[[NSMutableDictionary alloc]init];
+    loginUserEmail = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginUserEmail"];
     
     if (self.selectedNote!=nil) {
         _textView.attributedText=[self.selectedNote valueForKey:@"note"];
+        _titleView.attributedText=[self.selectedNote valueForKey:@"title"];
+        seletedNoteTitle=_titleView.text;
+         [self fetchAllDropboxData];
     }else{
-        _textView.attributedText=[[NSMutableAttributedString alloc] init];
+//        _textView.attributedText=[[NSMutableAttributedString alloc] init];
+//        _titleView.attributedText=[[NSMutableAttributedString alloc] init];
+        _textView.attributedText=[[NSMutableAttributedString alloc] initWithString:@"Content"];
+        _titleView.attributedText=[[NSMutableAttributedString alloc] initWithString:@"Title"];
     }
     
      toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0,100, 50)];
@@ -56,6 +72,7 @@
     
     //set toolbar to inputAccessoryView
     self.textView.inputAccessoryView=toolBar;
+    self.titleView.inputAccessoryView=toolBar;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,29 +88,42 @@
         NSDictionary *currentAttributesDict = [_textView.textStorage attributesAtIndex:selectedRange.location
                                                                         effectiveRange:nil];
         
+       // NSLog(@"%@",_textView.textStorage);
         UIFont *currentFont = [currentAttributesDict objectForKey:NSFontAttributeName];
+        //int underLine=[currentAttributesDict objectForKey:NSUnderlineStyleAttributeName];
         
         UIFontDescriptor *fontDescriptor = [currentFont fontDescriptor];
-        
+        //UIFont *updatedFont =nil;
         NSString *fontNameAttribute = [[fontDescriptor fontAttributes] objectForKey:UIFontDescriptorNameAttribute];
         UIFontDescriptor *changedFontDescriptor;
         
         if ([fontNameAttribute rangeOfString:traitName].location == NSNotFound) {
             uint32_t existingTraitsWithNewTrait = [fontDescriptor symbolicTraits] | traitValue;
             changedFontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:existingTraitsWithNewTrait];
+            UIFont *updatedFont = [UIFont fontWithDescriptor:changedFontDescriptor size:0.0];
+            NSDictionary *dict = @{NSFontAttributeName: updatedFont};
+            [_textView.textStorage beginEditing];
+            [_textView.textStorage addAttributes:dict range:selectedRange];
+            [_textView.textStorage endEditing];
         }
         else{
             uint32_t existingTraitsWithoutTrait = [fontDescriptor symbolicTraits] & ~traitValue;
             changedFontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:existingTraitsWithoutTrait];
+            UIFont *updatedFont = [UIFont fontWithDescriptor:changedFontDescriptor size:0.0];
+            NSDictionary *dict = @{NSFontAttributeName: updatedFont};
+            [_textView.textStorage beginEditing];
+            [_textView.textStorage addAttributes:dict range:selectedRange];
+            [_textView.textStorage endEditing];
         }
+        //[self select:@selector(makeTextColorBlack:)]
+        //[@selector(makeTextColorBlack:)];
         
-        UIFont *updatedFont = [UIFont fontWithDescriptor:changedFontDescriptor size:0.0];
+        //UIFont *updatedFont = [UIFont fontWithDescriptor:changedFontDescriptor size:0.0];
+       // NSDictionary *dict = @{NSFontAttributeName: updatedFont};
         
-        NSDictionary *dict = @{NSFontAttributeName: updatedFont};
-        
-        [_textView.textStorage beginEditing];
-        [_textView.textStorage setAttributes:dict range:selectedRange];
-        [_textView.textStorage endEditing];
+       // [_textView.textStorage beginEditing];
+        //[_textView.textStorage setAttributes:dict range:selectedRange];
+        //[_textView.textStorage endEditing];
     }
     @catch (NSException *exception) {
         NSLog(@"Exception while addOrRemoveFontTraitWithName");
@@ -106,12 +136,17 @@
     @try {
         NSRange selectedRange = [_textView selectedRange];
         
+        if (selectedRange.length==0) {
+            int endRange=_textView.attributedText.length;
+            selectedRange=NSMakeRange (0, endRange);
+        }
+        
         NSMutableParagraphStyle *newParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         [newParagraphStyle setAlignment:newAlignment];
         
         NSDictionary *dict = @{NSParagraphStyleAttributeName: newParagraphStyle};
         [_textView.textStorage beginEditing];
-        [_textView.textStorage setAttributes:dict range:selectedRange];
+        [_textView.textStorage addAttributes:dict range:selectedRange];
         [_textView.textStorage endEditing];
 
     }
@@ -152,7 +187,7 @@
         }
         
         [_textView.textStorage beginEditing];
-        [_textView.textStorage setAttributes:dict range:selectedRange];
+        [_textView.textStorage addAttributes:dict range:selectedRange];
         [_textView.textStorage endEditing];
     }
     @catch (NSException *exception) {
@@ -189,7 +224,7 @@
             
             NSDictionary *dict = @{NSForegroundColorAttributeName: [UIColor redColor]};
             [_textView.textStorage beginEditing];
-            [_textView.textStorage setAttributes:dict range:selectedRange];
+            [_textView.textStorage addAttributes:dict range:selectedRange];
             [_textView.textStorage endEditing];
         }
     }
@@ -212,7 +247,7 @@
             
             NSDictionary *dict = @{NSForegroundColorAttributeName: [UIColor blackColor]};
             [_textView.textStorage beginEditing];
-            [_textView.textStorage setAttributes:dict range:selectedRange];
+            [_textView.textStorage addAttributes:dict range:selectedRange];
             [_textView.textStorage endEditing];
         }
     }
@@ -231,31 +266,147 @@
 - (IBAction)saveNote:(id)sender {
     
     @try {
+        NSString *noteTitle=_titleView.attributedText;
         NSString *noteText=_textView.attributedText;
+        NSString *noteTitleText=_titleView.text;
+        NSString *notetext=_textView.text;
         
-        if([noteText length]>0)
+        //&& ![noteText isEqualToString:@"Content"] && ![noteTitle isEqualToString:@"Title"]
+        if([noteText length]>0 && ( ![notetext isEqualToString:@"Content"] || ![noteTitleText isEqualToString:@"Title"]))
         {
             NSManagedObjectContext *context = [self managedObjectContext];
             if (self.selectedNote!=nil)
             {
-                [self.selectedNote setValue:noteText forKey:@"note"];
+                [self.selectedNote setValue:noteTitle forKey:@"title"];
+                 [self.selectedNote setValue:noteText forKey:@"note"];
             }else
             {
-                NSManagedObject *newUser = [NSEntityDescription insertNewObjectForEntityForName:@"Notes" inManagedObjectContext:context];
-                [newUser setValue:loginUserEmail forKey:@"email"];
-                [newUser setValue:noteText forKey:@"note"];
+                NSManagedObject *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Notes" inManagedObjectContext:context];
+                [newNote setValue:loginUserEmail forKey:@"email"];
+                [newNote setValue:noteText forKey:@"note"];
+                [newNote setValue:noteTitle forKey:@"title"];
             }
             NSError *error = nil;
             // Save the object to persistent store
             if (![context save:&error]) {
                 NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
             }
+           [self saveInDropBox];
+        }else
+        {
+            UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Empty Note can't be saved"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            [alertMessage show];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+
         }
     }
     @catch (NSException *exception) {
          NSLog(@"Exception while saveNote");
-        
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
+    
+}
+
+-(void) saveInDropBox
+{
+    [self didPressLink];
+}
+//if session available the file will stored(pushed) to dropbox else noteslistview screen will show
+- (void)didPressLink {
+    if ([[DBSession sharedSession] isLinked]) {
+        [self uploadFileToDropBox];
+    }else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (DBRestClient *)restClient
+{
+    if (restClient == nil) {
+        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient.delegate = self;
+    }
+    return restClient;
+}
+
+-(void)fetchAllDropboxData
+{
+    if ([[DBSession sharedSession] isLinked]) {
+        [self.restClient loadMetadata:_loadData];
+    }
+}
+
+//store file in dropbox
+-(void)uploadFileToDropBox
+{
+    NSString *text = _textView.text;
+    //Title of note set as filename
+    NSString *fname = [_titleView.text stringByAppendingString:@".txt"];
+
+    NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *localPath = [localDir stringByAppendingPathComponent:fname];
+    [text writeToFile:localPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    //file is stored in root directory
+    NSString *destDir = @"/";
+    [self.restClient uploadFile:fname toPath:destDir withParentRev:seletedNoteRevision fromPath:localPath];
+     
+    
+}
+#pragma mark - DBRestClientDelegate Methods for Load Data
+//get the revision for already stored file
+- (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata *)metadata
+{
+    if([metadata.path isEqual:@"/"])
+    {
+        for (int i = 0; i < [metadata.contents count]; i++) {
+            DBMetadata *data = [metadata.contents objectAtIndex:i];
+
+                if (data.isDirectory) {
+                   // NSLog(@"%@ %@",data.rev,data.filename);
+                    [marrUploadData addObject:data];
+                }else{
+                    if ([data.filename isEqualToString:[seletedNoteTitle stringByAppendingString:@".txt"]])
+                    {
+                        seletedNoteRevision=data.rev;
+                    }
+                    //[revPath setValue:data.rev forKey:data.filename];
+                }
+        }
+    }else{
+        for (int i = 0; i < [metadata.contents count]; i++) {
+            DBMetadata *data = [metadata.contents objectAtIndex:i];
+            
+            if (data.isDirectory) {
+                //NSLog(@"%@ %@",data.rev,data.filename);
+                [marrUploadData addObject:data];
+            }
+            
+            
+        }
+    }
+}
+
+-(void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath from:(NSString *)srcPath
+{
+  
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
+                                                   message:@"File synced with dropbox successfully."
+                                                  delegate:nil
+                                         cancelButtonTitle:@"Ok"
+                                         otherButtonTitles:nil];
+    [alert show];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)restClient:(DBRestClient *)client uploadFileFailedWithError:(NSError *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
+                                                   message:[error localizedDescription]
+                                                  delegate:nil
+                                         cancelButtonTitle:@"Ok"
+                                         otherButtonTitles:nil];
+    [alert show];
      [self dismissViewControllerAnimated:YES completion:nil];
 }
 

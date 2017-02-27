@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		B811B6161E5B65F4006DB7D1 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B811B6151E5B65F4006DB7D1 /* ProfileViewController.m */; };
+		B86458E61E6185320032F7C1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458E51E6185320032F7C1 /* Security.framework */; };
+		B86458E81E6185400032F7C1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458E71E6185400032F7C1 /* QuartzCore.framework */; };
+		B86458EA1E61863D0032F7C1 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458E91E61863D0032F7C1 /* DropboxSDK.framework */; };
+		B86458EC1E6192D70032F7C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458EB1E6192D70032F7C1 /* Foundation.framework */; };
+		B86458EE1E6192E60032F7C1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458ED1E6192E60032F7C1 /* CoreGraphics.framework */; };
+		B86458F01E6192ED0032F7C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458EF1E6192ED0032F7C1 /* UIKit.framework */; };
 		B8CCBB7C1E59DE9B00A4B602 /* bold@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB7B1E59DE9B00A4B602 /* bold@2x.png */; };
 		B8CCBB7E1E59E0AA00A4B602 /* italic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB7D1E59E0AA00A4B602 /* italic@2x.png */; };
 		B8CCBB801E59E12200A4B602 /* underline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB7F1E59E12200A4B602 /* underline@2x.png */; };
@@ -41,6 +47,12 @@
 /* Begin PBXFileReference section */
 		B811B6141E5B65F4006DB7D1 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		B811B6151E5B65F4006DB7D1 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		B86458E51E6185320032F7C1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B86458E71E6185400032F7C1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B86458E91E61863D0032F7C1 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = "../../Softwares/dropbox-ios-sdk-1.3.14/DropboxSDK.framework"; sourceTree = "<group>"; };
+		B86458EB1E6192D70032F7C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B86458ED1E6192E60032F7C1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B86458EF1E6192ED0032F7C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B8CCBB7B1E59DE9B00A4B602 /* bold@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bold@2x.png"; sourceTree = "<group>"; };
 		B8CCBB7D1E59E0AA00A4B602 /* italic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "italic@2x.png"; sourceTree = "<group>"; };
 		B8CCBB7F1E59E12200A4B602 /* underline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "underline@2x.png"; sourceTree = "<group>"; };
@@ -76,6 +88,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86458F01E6192ED0032F7C1 /* UIKit.framework in Frameworks */,
+				B86458EE1E6192E60032F7C1 /* CoreGraphics.framework in Frameworks */,
+				B86458EC1E6192D70032F7C1 /* Foundation.framework in Frameworks */,
+				B86458EA1E61863D0032F7C1 /* DropboxSDK.framework in Frameworks */,
+				B86458E81E6185400032F7C1 /* QuartzCore.framework in Frameworks */,
+				B86458E61E6185320032F7C1 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +110,12 @@
 		B8F2EE471E595237008A3B8A = {
 			isa = PBXGroup;
 			children = (
+				B86458EF1E6192ED0032F7C1 /* UIKit.framework */,
+				B86458ED1E6192E60032F7C1 /* CoreGraphics.framework */,
+				B86458EB1E6192D70032F7C1 /* Foundation.framework */,
+				B86458E91E61863D0032F7C1 /* DropboxSDK.framework */,
+				B86458E71E6185400032F7C1 /* QuartzCore.framework */,
+				B86458E51E6185320032F7C1 /* Security.framework */,
 				B8F2EE521E595237008A3B8A /* Notes */,
 				B8F2EE6F1E595237008A3B8A /* NotesTests */,
 				B8F2EE511E595237008A3B8A /* Products */,
@@ -401,6 +425,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/chandara-3464/Documents/Softwares/dropbox-ios-sdk-1.3.14",
+				);
 				INFOPLIST_FILE = Notes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -411,6 +439,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/chandara-3464/Documents/Softwares/dropbox-ios-sdk-1.3.14",
+				);
 				INFOPLIST_FILE = Notes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

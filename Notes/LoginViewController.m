@@ -46,6 +46,7 @@
     NSArray *users;
     NSString *email=self.userEmail.text;
     NSString *password=self.userPassword.text;
+    
     //check whether user available or not in UserDetail table.
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"UserDetail"];

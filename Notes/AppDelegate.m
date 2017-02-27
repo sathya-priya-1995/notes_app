@@ -9,9 +9,47 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+//    NSString *dropBoxAppKey = @"e2t2eoqeup9s3lx";
+//    NSString *dropBoxAppSecret = @"812umvhca9l74ed";
+//    NSString *root = kDBRootDropbox;
+//    
+//    DBSession* session =
+//    [[DBSession alloc] initWithAppKey:dropBoxAppKey appSecret:dropBoxAppSecret root:root];
+//    session.delegate = self;
+//    [DBSession setSharedSession:session];
+//    
+//    [DBRequest setNetworkRequestDelegate:self];
+//    
+//    return YES;
+    
+    NSString *root = kDBRootDropbox;
+    
+    
+    DBSession* dbSession = [[DBSession alloc]
+                            initWithAppKey:@"e2t2eoqeup9s3lx"
+                            appSecret:@"812umvhca9l74ed"
+                            root:root];
+    
+    
+    [DBSession setSharedSession:dbSession];
+    
+    
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"App linked successfully!");
+            UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Dropbox Synced Successfully "delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            [alertMessage show];
+        }
+        return YES;
+    }
+    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

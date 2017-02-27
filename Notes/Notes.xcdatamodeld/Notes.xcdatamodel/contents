@@ -3,6 +3,7 @@
     <entity name="Notes" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <entity name="UserDetail" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,7 +11,7 @@
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Notes" positionX="241" positionY="110" width="128" height="90"/>
         <element name="UserDetail" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Notes" positionX="241" positionY="110" width="128" height="73"/>
     </elements>
 </model>

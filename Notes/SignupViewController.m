@@ -1,6 +1,7 @@
 
 
 #import "SignupViewController.h"
+#import "CommonCrypto/CommonCryptor.h"
 
 @interface SignupViewController ()
 
@@ -37,13 +38,14 @@
     if (isValid)
     {
         //save user datail.
+        
         NSManagedObjectContext *context = [self managedObjectContext];
         NSManagedObject *newUser = [NSEntityDescription insertNewObjectForEntityForName:@"UserDetail" inManagedObjectContext:context];
         [newUser setValue:userName forKey:@"name"];
         [newUser setValue:userEmail forKey:@"email"];
         [newUser setValue:userPassword forKey:@"password"];
         
-        //empty fields
+                //empty fields
         self.name.text=@"";
         self.email.text=@"";
         self.password.text=@"";
@@ -76,7 +78,7 @@
             
         }
         if (!validPassword) {
-            UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Enter valid password"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Enter valid password[It should have minimum 6 character and one uppercase,lowercase,special character,number]" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
             [alertMessage show];
             return false;
         }
@@ -112,5 +114,6 @@
     }
     return false;
 }
+
 
 @end
