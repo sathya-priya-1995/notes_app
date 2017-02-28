@@ -33,8 +33,9 @@
     NSString *userName=self.name.text;
     NSString *userEmail=self.email.text;
     NSString *userPassword=self.password.text;
+    NSString *confirmationPassword=self.confirmationPassword.text;
     
-    BOOL isValid=[self validate:userName email:userEmail pass:userPassword];
+    BOOL isValid=[self validate:userName email:userEmail pass:userPassword conformPass:confirmationPassword];
     if (isValid)
     {
         //save user datail.
@@ -49,7 +50,7 @@
         self.name.text=@"";
         self.email.text=@"";
         self.password.text=@"";
-        
+        self.confirmationPassword.text=@"";
         NSError *error = nil;
         // Save the object to persistent store
         if (![context save:&error]) {
@@ -63,7 +64,7 @@
 }
 
 //validate username and password
--(BOOL)validate:(NSString*)userName email:(NSString*)userEmail pass:(NSString*)password
+-(BOOL)validate:(NSString*)userName email:(NSString*)userEmail pass:(NSString*)password conformPass:(NSString*)confirmationPassword
 {
     //empty check
     if(![userName isEqual:@""]&& ![userEmail isEqual:@""]&&![password isEqual:@""])
@@ -77,12 +78,16 @@
             return false;
             
         }
-        if (!validPassword) {
+        if(![password isEqualToString:confirmationPassword])
+        {
+            UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Pssword and confirmation password should be same" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            [alertMessage show];
+            return false;
+        }else if (!validPassword) {
             UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Enter valid password[It should have minimum 6 character and one uppercase,lowercase,special character,number]" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
             [alertMessage show];
             return false;
         }
-        
         return true;
     }else
     {
