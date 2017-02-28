@@ -20,6 +20,7 @@
 		B8CCBB821E59E1F000A4B602 /* justifyfull@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB811E59E1F000A4B602 /* justifyfull@2x.png */; };
 		B8CCBB841E59E21700A4B602 /* justifyleft.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB831E59E21700A4B602 /* justifyleft.png */; };
 		B8CCBB861E59E24900A4B602 /* justifyright@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB851E59E24900A4B602 /* justifyright@2x.png */; };
+		B8F1FFE31E653E2000D177D2 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F1FFE21E653E2000D177D2 /* SSKeychain.m */; };
 		B8F2EE561E595237008A3B8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F2EE551E595237008A3B8A /* main.m */; };
 		B8F2EE591E595237008A3B8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F2EE581E595237008A3B8A /* AppDelegate.m */; };
 		B8F2EE5C1E595237008A3B8A /* Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B8F2EE5A1E595237008A3B8A /* Notes.xcdatamodeld */; };
@@ -60,6 +61,8 @@
 		B8CCBB811E59E1F000A4B602 /* justifyfull@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "justifyfull@2x.png"; sourceTree = "<group>"; };
 		B8CCBB831E59E21700A4B602 /* justifyleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = justifyleft.png; sourceTree = "<group>"; };
 		B8CCBB851E59E24900A4B602 /* justifyright@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "justifyright@2x.png"; sourceTree = "<group>"; };
+		B8F1FFE11E653E2000D177D2 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		B8F1FFE21E653E2000D177D2 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		B8F2EE501E595237008A3B8A /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F2EE541E595237008A3B8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8F2EE551E595237008A3B8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 		B8F2EE521E595237008A3B8A /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				B8F1FFE11E653E2000D177D2 /* SSKeychain.h */,
+				B8F1FFE21E653E2000D177D2 /* SSKeychain.m */,
 				B8CCBB851E59E24900A4B602 /* justifyright@2x.png */,
 				B8CCBB831E59E21700A4B602 /* justifyleft.png */,
 				B8CCBB811E59E1F000A4B602 /* justifyfull@2x.png */,
@@ -306,6 +311,7 @@
 				B8F2EE841E59550E008A3B8A /* NotesListViewController.m in Sources */,
 				B8F2EE871E595AED008A3B8A /* NoteEditViewController.m in Sources */,
 				B8F2EE7E1E5954DA008A3B8A /* LoginViewController.m in Sources */,
+				B8F1FFE31E653E2000D177D2 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

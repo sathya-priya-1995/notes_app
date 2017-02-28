@@ -1,6 +1,7 @@
 
 
 #import "AppDelegate.h"
+#import "SSKeychain.h"
 
 @interface AppDelegate ()
 
@@ -11,6 +12,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [SSKeychain setAccessibilityType:kSecAttrAccessibleWhenUnlocked];
 //    NSString *dropBoxAppKey = @"e2t2eoqeup9s3lx";
 //    NSString *dropBoxAppSecret = @"812umvhca9l74ed";
 //    NSString *root = kDBRootDropbox;

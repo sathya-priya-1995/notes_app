@@ -48,15 +48,17 @@
     NSString *password=self.userPassword.text;
     
     //check whether user available or not in UserDetail table.
+    // NSData *encryptedPass=[password dataUsingEncoding:NSUTF8StringEncoding];
+   NSString *userPassword=[SSKeychain passwordForService:@"notes_App" account:email];
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"UserDetail"];
-    NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"(email == %@) AND (password == %@)",email,password];
+    NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"(email == %@)",email];
     [fetchRequest setPredicate:predicateID];
     users =[[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
     
-    if ([users count]>0) {
+    if ([users count]>0 && [password isEqualToString:userPassword]) {
         
-        [self clear];
+        //[self clear];
         
         NSManagedObject *user=[users objectAtIndex:0];
         //save logged user information in Userdefaults

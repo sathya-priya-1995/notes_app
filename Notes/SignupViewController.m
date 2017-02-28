@@ -38,12 +38,12 @@
     if (isValid)
     {
         //save user datail.
-        
+        [SSKeychain setPassword:userPassword forService:@"notes_App" account:userEmail];
         NSManagedObjectContext *context = [self managedObjectContext];
         NSManagedObject *newUser = [NSEntityDescription insertNewObjectForEntityForName:@"UserDetail" inManagedObjectContext:context];
         [newUser setValue:userName forKey:@"name"];
         [newUser setValue:userEmail forKey:@"email"];
-        [newUser setValue:userPassword forKey:@"password"];
+        [newUser setValue:@"dummy" forKey:@"password"];
         
                 //empty fields
         self.name.text=@"";
