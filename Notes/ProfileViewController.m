@@ -24,4 +24,21 @@
 - (IBAction)done:(id)sender {
      [self dismissViewControllerAnimated:YES completion:nil];
 }
+- (IBAction)doLogOut:(id)sender
+{
+    //while logout we will clear all details from userdefaults
+    //remove dropbox session while logout
+    [[DBSession sharedSession] unlinkAll];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUsermName"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUserEmail"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"login"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+   // [self dismissViewControllerAnimated:YES completion:nil];
+    UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *vc=[board instantiateViewControllerWithIdentifier:@"Logout"];
+    [self presentViewController:vc animated:YES completion:nil];
+
+    
+}
+
 @end

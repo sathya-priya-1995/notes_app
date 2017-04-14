@@ -1,7 +1,7 @@
 
 
 #import "SignupViewController.h"
-#import "CommonCrypto/CommonCryptor.h"
+//#import "CommonCrypto/CommonCryptor.h"
 
 @interface SignupViewController ()
 
@@ -22,6 +22,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _email.placeholder=@"Email";
+    _name.placeholder=@"Name";
+    _password.placeholder=@"Password";
+    _confirmationPassword.placeholder=@"Conformation Password";
+    
+    
+    _registerBtn.layer.cornerRadius = 10;
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,9 +65,11 @@
             NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
         }
         else{
+            //[controller dismissViewControllerAnimated:YES completion:nil];
             UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Message" message:@"Registered Successfully"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
             [alertMessage show];
-        }
+            [self.navigationController popViewControllerAnimated:YES];
+            }
     }
 }
 

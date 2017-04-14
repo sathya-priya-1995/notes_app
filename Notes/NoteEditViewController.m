@@ -39,6 +39,7 @@
     if (self.selectedNote!=nil) {
         _textView.attributedText=[self.selectedNote valueForKey:@"note"];
         _titleView.attributedText=[self.selectedNote valueForKey:@"title"];
+       // _titleView.font=[UIFont boldSystemFontOfSize:14];
         seletedNoteTitle=_titleView.text;
          [self fetchAllDropboxData];
     }else{
@@ -46,6 +47,8 @@
 //        _titleView.attributedText=[[NSMutableAttributedString alloc] init];
         _textView.attributedText=[[NSMutableAttributedString alloc] initWithString:@"Content"];
         _titleView.attributedText=[[NSMutableAttributedString alloc] initWithString:@"Title"];
+        _textView.textColor=[UIColor lightGrayColor];
+        _titleView.textColor=[UIColor lightGrayColor];
     }
     
      toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0,100, 50)];
@@ -333,7 +336,7 @@
 -(void)fetchAllDropboxData
 {
     if ([[DBSession sharedSession] isLinked]) {
-        [self.restClient loadMetadata:_loadData];
+        [self.restClient loadMetadata:@"/"];
     }
 }
 
@@ -409,5 +412,54 @@
     [alert show];
      [self dismissViewControllerAnimated:YES completion:nil];
 }
+- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
+{
+    if(_selectedNote==nil)
+    {
+    
+    if(textView==_titleView&&_titleView.textColor==[UIColor lightGrayColor])
+    {
+    _titleView.text = @"";
+    _titleView.textColor = [UIColor blackColor];
+    _titleView.font=[UIFont boldSystemFontOfSize:14];
+    }
+    else if(textView==_textView&&_textView.textColor==[UIColor lightGrayColor])
+    {
+        _textView.text = @"";
+        _textView.textColor = [UIColor blackColor];
+        //_textView.font=[UIFont boldSystemFontOfSize:14];
+    }
+    }
+    return YES;
+    
+}
 
+-(void) textViewDidChange:(UITextView *)textView
+{
+  
+    if(textView==_titleView)
+    {
+    if(_titleView.text.length == 0){
+        _titleView.textColor = [UIColor lightGrayColor];
+        _titleView.text = @"Title";
+        [_titleView resignFirstResponder];
+    }
+    }
+    else if (textView==_textView)
+    {
+        if(_textView.text.length == 0){
+            _textView.textColor = [UIColor lightGrayColor];
+            _textView.text = @"Content";
+            [_textView resignFirstResponder];
+        
+    }
+  }
+    
+}
+
+- (IBAction)back:(id)sender {
+    
+     [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
 @end

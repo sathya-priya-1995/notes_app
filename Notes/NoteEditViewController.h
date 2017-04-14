@@ -4,7 +4,7 @@
 #import <CoreData/CoreData.h>
 #import <DropboxSDK/DropboxSDK.h>
 
-@interface NoteEditViewController : UIViewController<DBRestClientDelegate>
+@interface NoteEditViewController : UIViewController<DBRestClientDelegate,UITextViewDelegate>
 
 {
     NSMutableArray *marrUploadData;
@@ -16,5 +16,6 @@
 - (IBAction)saveNote:(id)sender;
 
 @property NSManagedObject *selectedNote;
+- (IBAction)back:(id)sender;
 @property (nonatomic, strong) NSString *loadData;
 @end

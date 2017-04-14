@@ -27,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItems;
     
     //load notes from table based on logged user email
     loginUserEmail = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginUserEmail"];
@@ -35,6 +36,7 @@
     NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"(email == %@) ",loginUserEmail];
     [fetchRequest setPredicate:predicateID];
     notesArray =[[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -122,18 +124,6 @@
          [self performSegueWithIdentifier:@"pushDetailView" sender:selectedNote];
      }
     
-}
-- (IBAction)doLogOut:(id)sender
-{
-    //while logout we will clear all details from userdefaults
-    //remove dropbox session while logout 
-    [[DBSession sharedSession] unlinkAll];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUsermName"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUserEmail"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"login"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
 //sync with drobox

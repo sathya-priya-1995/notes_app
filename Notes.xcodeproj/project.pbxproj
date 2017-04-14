@@ -13,6 +13,15 @@
 		B86458EC1E6192D70032F7C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458EB1E6192D70032F7C1 /* Foundation.framework */; };
 		B86458EE1E6192E60032F7C1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458ED1E6192E60032F7C1 /* CoreGraphics.framework */; };
 		B86458F01E6192ED0032F7C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86458EF1E6192ED0032F7C1 /* UIKit.framework */; };
+		B87E68C71EA09ABE0018FC33 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68C01EA09ABE0018FC33 /* back.png */; };
+		B87E68C81EA09ABE0018FC33 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68C11EA09ABE0018FC33 /* cancel.png */; };
+		B87E68C91EA09ABE0018FC33 /* dropbox.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68C21EA09ABE0018FC33 /* dropbox.png */; };
+		B87E68CA1EA09ABE0018FC33 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68C31EA09ABE0018FC33 /* logout.png */; };
+		B87E68CB1EA09ABE0018FC33 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68C41EA09ABE0018FC33 /* plus.png */; };
+		B87E68CC1EA09ABE0018FC33 /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68C51EA09ABE0018FC33 /* profile.png */; };
+		B87E68CD1EA09ABE0018FC33 /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68C61EA09ABE0018FC33 /* tick.png */; };
+		B87E68CF1EA1243D0018FC33 /* profile1.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68CE1EA1243D0018FC33 /* profile1.png */; };
+		B87E68D11EA124480018FC33 /* profile2.png in Resources */ = {isa = PBXBuildFile; fileRef = B87E68D01EA124480018FC33 /* profile2.png */; };
 		B88438AA1E63FF5100216229 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B88438A91E63FF5100216229 /* DropboxSDK.framework */; };
 		B8CCBB7C1E59DE9B00A4B602 /* bold@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB7B1E59DE9B00A4B602 /* bold@2x.png */; };
 		B8CCBB7E1E59E0AA00A4B602 /* italic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CCBB7D1E59E0AA00A4B602 /* italic@2x.png */; };
@@ -54,6 +63,15 @@
 		B86458EB1E6192D70032F7C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B86458ED1E6192E60032F7C1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B86458EF1E6192ED0032F7C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B87E68C01EA09ABE0018FC33 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		B87E68C11EA09ABE0018FC33 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
+		B87E68C21EA09ABE0018FC33 /* dropbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropbox.png; sourceTree = "<group>"; };
+		B87E68C31EA09ABE0018FC33 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		B87E68C41EA09ABE0018FC33 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		B87E68C51EA09ABE0018FC33 /* profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile.png; sourceTree = "<group>"; };
+		B87E68C61EA09ABE0018FC33 /* tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tick.png; sourceTree = "<group>"; };
+		B87E68CE1EA1243D0018FC33 /* profile1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile1.png; sourceTree = "<group>"; };
+		B87E68D01EA124480018FC33 /* profile2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile2.png; sourceTree = "<group>"; };
 		B88438A91E63FF5100216229 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		B8CCBB7B1E59DE9B00A4B602 /* bold@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bold@2x.png"; sourceTree = "<group>"; };
 		B8CCBB7D1E59E0AA00A4B602 /* italic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "italic@2x.png"; sourceTree = "<group>"; };
@@ -111,6 +129,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B87E68BF1EA09ABE0018FC33 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				B87E68D01EA124480018FC33 /* profile2.png */,
+				B87E68CE1EA1243D0018FC33 /* profile1.png */,
+				B87E68C01EA09ABE0018FC33 /* back.png */,
+				B87E68C11EA09ABE0018FC33 /* cancel.png */,
+				B87E68C21EA09ABE0018FC33 /* dropbox.png */,
+				B87E68C31EA09ABE0018FC33 /* logout.png */,
+				B87E68C41EA09ABE0018FC33 /* plus.png */,
+				B87E68C51EA09ABE0018FC33 /* profile.png */,
+				B87E68C61EA09ABE0018FC33 /* tick.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
 		B8F2EE471E595237008A3B8A = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +173,7 @@
 		B8F2EE521E595237008A3B8A /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				B87E68BF1EA09ABE0018FC33 /* icons */,
 				B8F1FFE11E653E2000D177D2 /* SSKeychain.h */,
 				B8F1FFE21E653E2000D177D2 /* SSKeychain.m */,
 				B8CCBB851E59E24900A4B602 /* justifyright@2x.png */,
@@ -276,14 +311,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B87E68C91EA09ABE0018FC33 /* dropbox.png in Resources */,
 				B8F2EE621E595237008A3B8A /* Main.storyboard in Resources */,
 				B8CCBB801E59E12200A4B602 /* underline@2x.png in Resources */,
 				B8CCBB861E59E24900A4B602 /* justifyright@2x.png in Resources */,
 				B8CCBB7E1E59E0AA00A4B602 /* italic@2x.png in Resources */,
+				B87E68CB1EA09ABE0018FC33 /* plus.png in Resources */,
+				B87E68CD1EA09ABE0018FC33 /* tick.png in Resources */,
+				B87E68C81EA09ABE0018FC33 /* cancel.png in Resources */,
+				B87E68CA1EA09ABE0018FC33 /* logout.png in Resources */,
 				B8CCBB841E59E21700A4B602 /* justifyleft.png in Resources */,
 				B8CCBB7C1E59DE9B00A4B602 /* bold@2x.png in Resources */,
+				B87E68C71EA09ABE0018FC33 /* back.png in Resources */,
+				B87E68D11EA124480018FC33 /* profile2.png in Resources */,
 				B8F2EE671E595237008A3B8A /* LaunchScreen.xib in Resources */,
+				B87E68CF1EA1243D0018FC33 /* profile1.png in Resources */,
 				B8CCBB821E59E1F000A4B602 /* justifyfull@2x.png in Resources */,
+				B87E68CC1EA09ABE0018FC33 /* profile.png in Resources */,
 				B8F2EE641E595237008A3B8A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

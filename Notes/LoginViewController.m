@@ -25,15 +25,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self clear];
+    _userEmail.placeholder=@"Email";
+    _userPassword.placeholder=@"Password";
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
     //check existing login available in userdefaults ,if it available navigate to NotesList view screen.
     islogged = [[NSUserDefaults standardUserDefaults]stringForKey:@"login"];
+    
+    _logouBtn.layer.cornerRadius = 10;
     if(islogged)
     {
         UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *vc=[board instantiateViewControllerWithIdentifier:@"NotesListView"];
         [self presentViewController:vc animated:YES completion:nil];
     }
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+[[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

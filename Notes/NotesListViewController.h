@@ -8,7 +8,7 @@
      DBRestClient *restClient;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-- (IBAction)doLogOut:(id)sender;
+
 - (IBAction)syncWithDropbox:(id)sender;
 
 @end
