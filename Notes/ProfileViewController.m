@@ -35,7 +35,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
    // [self dismissViewControllerAnimated:YES completion:nil];
     UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *vc=[board instantiateViewControllerWithIdentifier:@"Logout"];
+    UIViewController *vc=[board instantiateViewControllerWithIdentifier:@"LoginNavigationController"];
     [self presentViewController:vc animated:YES completion:nil];
 
     
