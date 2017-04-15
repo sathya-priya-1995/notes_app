@@ -53,6 +53,7 @@
     
      toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0,100, 50)];
     toolBar.barStyle=UIBarStyleDefault;
+    toolBar.tintColor=[UIColor redColor];
     UIImage *boldImage = [UIImage imageNamed:@"bold@2x.png"];
     UIImage *italicImage = [UIImage imageNamed:@"italic@2x.png"];
     UIImage *underLineImage = [UIImage imageNamed:@"underline@2x.png"];
@@ -429,6 +430,22 @@
         _textView.textColor = [UIColor blackColor];
         //_textView.font=[UIFont boldSystemFontOfSize:14];
     }
+    }
+    else
+    {
+        if(textView==_titleView&&_titleView.textColor==[UIColor lightGrayColor])
+        {
+            _titleView.text = @"";
+            _titleView.textColor = [UIColor blackColor];
+            _titleView.font=[UIFont boldSystemFontOfSize:14];
+        }
+        else if(textView==_textView&&_textView.textColor==[UIColor lightGrayColor])
+        {
+            _textView.text = @"";
+            _textView.textColor = [UIColor blackColor];
+            //_textView.font=[UIFont boldSystemFontOfSize:14];
+        }
+
     }
     return YES;
     

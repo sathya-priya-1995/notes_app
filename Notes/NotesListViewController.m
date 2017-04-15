@@ -36,6 +36,7 @@
     NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"(email == %@) ",loginUserEmail];
     [fetchRequest setPredicate:predicateID];
     notesArray =[[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    [self.tableview flashScrollIndicators];
     
 }
 
@@ -104,12 +105,13 @@
     }
     if (tableView == self.searchDisplayController.searchResultsTableView) {
        NSManagedObject *note = [searchResultArray objectAtIndex:indexPath.row];
-        [cell.textLabel setAttributedText:[note valueForKey:@"title"]];
+       [cell.textLabel setAttributedText:[note valueForKey:@"title"]];
+       
     }else
     {
-         NSManagedObject *note = [notesArray objectAtIndex:indexPath.row];
+       NSManagedObject *note = [notesArray objectAtIndex:indexPath.row];
         [cell.textLabel setAttributedText:[note valueForKey:@"title"]];
-    }
+           }
     return cell;
 }
 
@@ -134,11 +136,16 @@
 - (void)didPressLink {
     if (![[DBSession sharedSession] isLinked]) {
         [[DBSession sharedSession] linkFromController:self];
+       // UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"DropBox sync enabled"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+        //[alertMessage show];
+        NSLog(@"linked");
+
     }else
     {
-        UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"DropBox sync enabled Already"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+        [[DBSession sharedSession] unlinkAll];
+        UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"DropBox sync disabled"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
         [alertMessage show];
-        NSLog(@"linked");
+        NSLog(@"unlinked");
     }
 }
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope

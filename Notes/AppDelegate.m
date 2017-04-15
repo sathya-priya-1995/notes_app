@@ -37,6 +37,8 @@
     
     
     [DBSession setSharedSession:dbSession];
+   
+    
     
     
     return YES;

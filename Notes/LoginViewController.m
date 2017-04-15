@@ -42,6 +42,12 @@
 }
 - (void)viewDidAppear:(BOOL)animated
 {
+    _userEmail.text=@"";
+    _userPassword.text=@"";
+    
+    _userEmail.placeholder=@"Email";
+    _userPassword.placeholder=@"Password";
+     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     [super viewDidAppear:animated];
 [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
