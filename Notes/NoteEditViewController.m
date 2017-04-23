@@ -53,7 +53,7 @@
     
      toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0,100, 50)];
     toolBar.barStyle=UIBarStyleDefault;
-    toolBar.tintColor=[UIColor redColor];
+    toolBar.tintColor=[UIColor blackColor];
     UIImage *boldImage = [UIImage imageNamed:@"bold@2x.png"];
     UIImage *italicImage = [UIImage imageNamed:@"italic@2x.png"];
     UIImage *underLineImage = [UIImage imageNamed:@"underline@2x.png"];
@@ -276,7 +276,7 @@
         NSString *notetext=_textView.text;
         
         //&& ![noteText isEqualToString:@"Content"] && ![noteTitle isEqualToString:@"Title"]
-        if([noteText length]>0 && ( ![notetext isEqualToString:@"Content"] || ![noteTitleText isEqualToString:@"Title"]))
+        if([noteText length]>0 &&([noteTitle length]>0)&& ( ![notetext isEqualToString:@"Content"] || ![noteTitleText isEqualToString:@"Title"]))
         {
             NSManagedObjectContext *context = [self managedObjectContext];
             if (self.selectedNote!=nil)
@@ -296,10 +296,12 @@
                 NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
             }
            [self saveInDropBox];
+            
+
         }else
         {
-            UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Empty Note can't be saved"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-            [alertMessage show];
+           // UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Empty Note can't be saved"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            //[alertMessage show];
             [self dismissViewControllerAnimated:YES completion:nil];
             
 
@@ -320,6 +322,7 @@
 - (void)didPressLink {
     if ([[DBSession sharedSession] isLinked]) {
         [self uploadFileToDropBox];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }else{
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -337,7 +340,7 @@
 -(void)fetchAllDropboxData
 {
     if ([[DBSession sharedSession] isLinked]) {
-        [self.restClient loadMetadata:@"/"];
+        [self.restClient loadMetadata:@"/NotesApp"];
     }
 }
 
@@ -352,7 +355,7 @@
     NSString *localPath = [localDir stringByAppendingPathComponent:fname];
     [text writeToFile:localPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     //file is stored in root directory
-    NSString *destDir = @"/";
+    NSString *destDir = @"/NotesApp";
     [self.restClient uploadFile:fname toPath:destDir withParentRev:seletedNoteRevision fromPath:localPath];
      
     
@@ -361,7 +364,7 @@
 //get the revision for already stored file
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata *)metadata
 {
-    if([metadata.path isEqual:@"/"])
+    if([metadata.path isEqual:@"/NotesApp"])
     {
         for (int i = 0; i < [metadata.contents count]; i++) {
             DBMetadata *data = [metadata.contents objectAtIndex:i];
@@ -394,24 +397,26 @@
 -(void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath from:(NSString *)srcPath
 {
   
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
+   /* UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
                                                    message:@"File synced with dropbox successfully."
                                                   delegate:nil
                                          cancelButtonTitle:@"Ok"
                                          otherButtonTitles:nil];
-    [alert show];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [alert show];*/
+    NSLog(@"File synced with dropbox successfully");
+    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)restClient:(DBRestClient *)client uploadFileFailedWithError:(NSError *)error
 {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
+    /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
                                                    message:[error localizedDescription]
                                                   delegate:nil
                                          cancelButtonTitle:@"Ok"
                                          otherButtonTitles:nil];
-    [alert show];
-     [self dismissViewControllerAnimated:YES completion:nil];
+    [alert show];*/
+    NSLog(@"%@",[error localizedDescription]);
+     //[self dismissViewControllerAnimated:YES completion:nil];
 }
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
@@ -475,6 +480,47 @@
 }
 
 - (IBAction)back:(id)sender {
+    @try {
+        NSString *noteTitle=_titleView.attributedText;
+        NSString *noteText=_textView.attributedText;
+        NSString *noteTitleText=_titleView.text;
+        NSString *notetext=_textView.text;
+        
+        //&& ![noteText isEqualToString:@"Content"] && ![noteTitle isEqualToString:@"Title"]
+        if([noteText length]>0 && [noteTitle length]>0 &&( ![notetext isEqualToString:@"Content"] || ![noteTitleText isEqualToString:@"Title"]))
+        {
+            NSManagedObjectContext *context = [self managedObjectContext];
+            if (self.selectedNote!=nil)
+            {
+                [self.selectedNote setValue:noteTitle forKey:@"title"];
+                [self.selectedNote setValue:noteText forKey:@"note"];
+            }else
+            {
+                NSManagedObject *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Notes" inManagedObjectContext:context];
+                [newNote setValue:loginUserEmail forKey:@"email"];
+                [newNote setValue:noteText forKey:@"note"];
+                [newNote setValue:noteTitle forKey:@"title"];
+            }
+            NSError *error = nil;
+            // Save the object to persistent store
+            if (![context save:&error]) {
+                NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+            }
+            [self saveInDropBox];
+        }else
+        {
+           // UIAlertView *alertMessage=[[UIAlertView alloc]initWithTitle:@"Alert" message:@"Empty Note can't be saved"delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            //[alertMessage show];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception while saveNote");
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+
     
      [self dismissViewControllerAnimated:YES completion:nil];
     

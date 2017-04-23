@@ -208,8 +208,8 @@
         NSAttributedString *str=[deletedObj valueForKey:@"title"];
         NSString *val=[str string];
         NSString *fname = [ val stringByAppendingString:@".txt"];
-        NSString *dir=@"/";
-        NSString *path = [NSString stringWithFormat: @"%@%@", dir,fname];
+        NSString *dir=@"/NotesApp";
+        NSString *path = [NSString stringWithFormat: @"%@/%@", dir,fname];
         [self.restClient deletePath:path];
     }
     //delete data from table

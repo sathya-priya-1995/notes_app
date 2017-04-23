@@ -28,7 +28,10 @@
 {
     //while logout we will clear all details from userdefaults
     //remove dropbox session while logout
+     if ([[DBSession sharedSession] isLinked])
+     {
     [[DBSession sharedSession] unlinkAll];
+     }
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUsermName"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginUserEmail"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"login"];
