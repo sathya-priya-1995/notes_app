@@ -7,7 +7,7 @@
 {
     NSString *loginUserEmail;
     UIToolbar *toolBar;
-    UIView *inputView;
+   // UIView *inputView;
     NSMutableDictionary *revPath;
     NSString *seletedNoteTitle;
     NSString *seletedNoteRevision;
@@ -369,29 +369,14 @@
         for (int i = 0; i < [metadata.contents count]; i++) {
             DBMetadata *data = [metadata.contents objectAtIndex:i];
 
-                if (data.isDirectory) {
-                   // NSLog(@"%@ %@",data.rev,data.filename);
-                    [marrUploadData addObject:data];
-                }else{
+                if (!data.isDirectory) {
                     if ([data.filename isEqualToString:[seletedNoteTitle stringByAppendingString:@".txt"]])
                     {
                         seletedNoteRevision=data.rev;
                     }
-                    //[revPath setValue:data.rev forKey:data.filename];
-                }
-        }
-    }else{
-        for (int i = 0; i < [metadata.contents count]; i++) {
-            DBMetadata *data = [metadata.contents objectAtIndex:i];
-            
-            if (data.isDirectory) {
-                //NSLog(@"%@ %@",data.rev,data.filename);
-                [marrUploadData addObject:data];
-            }
-            
-            
-        }
-    }
+                }        }
+   }
+    
 }
 
 -(void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath from:(NSString *)srcPath
@@ -464,7 +449,7 @@
     if(_titleView.text.length == 0){
         _titleView.textColor = [UIColor lightGrayColor];
         _titleView.text = @"Title";
-        [_titleView resignFirstResponder];
+       [_titleView resignFirstResponder];
     }
     }
     else if (textView==_textView)

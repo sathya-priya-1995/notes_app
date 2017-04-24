@@ -64,7 +64,7 @@
     
     //pass selected note from Notes list view to Edit view
     if ([[segue identifier] isEqualToString:@"pushDetailView"]) {
-        NoteEditViewController *controller = segue.destinationViewController;
+        NoteEditViewController *controller =segue.destinationViewController;
         @try {
             if ([indexPath valueForKey:@"note"]!=nil ) {
                 controller.selectedNote=indexPath;
@@ -80,6 +80,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
