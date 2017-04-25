@@ -472,7 +472,7 @@
         NSString *notetext=_textView.text;
         
         //&& ![noteText isEqualToString:@"Content"] && ![noteTitle isEqualToString:@"Title"]
-        if([noteText length]>0 && [noteTitle length]>0 &&( ![notetext isEqualToString:@"Content"] || ![noteTitleText isEqualToString:@"Title"]))
+        if( (![notetext isEqualToString:@"Content"] &&[noteText length]>0 ) || (![noteTitleText isEqualToString:@"Title"] &&[noteTitle length]>0 ))
         {
             NSManagedObjectContext *context = [self managedObjectContext];
             if (self.selectedNote!=nil)
